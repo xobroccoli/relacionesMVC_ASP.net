@@ -5,11 +5,16 @@ namespace relacionesMVC_ASP.net.Models
     public class Vehiculo
     {
         public int Id { get; set; }
-
+        /*
         [Required(ErrorMessage = "El campo Marca es obligatorio.")]
         [StringLength(50, ErrorMessage = "El campo Marca no puede superar los 50 caracteres.")]
         [Display(Name = "Marca del Vehículo")]
         public string Marca { get; set; } = string.Empty;
+        */
+        [Display(Name = "Marca")]
+        public int MarcaId { get; set; }
+        public Marca? Marca { get; set; } 
+
 
         [Required(ErrorMessage = "El campo Modelo es obligatorio.")]
         [StringLength(50, ErrorMessage = "El campo Modelo no puede superar los 50 caracteres.")]
@@ -35,5 +40,7 @@ namespace relacionesMVC_ASP.net.Models
         [Range(0, 10000000, ErrorMessage = "El precio debe estar entre 0 y 10000000.")]
         [Display(Name = "Precio")]
         public int Precio { get; set; } 
+
+
     }
 }

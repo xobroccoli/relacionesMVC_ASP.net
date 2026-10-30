@@ -20,6 +20,32 @@ namespace relacionesMVC_ASP.net.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("relacionesMVC_ASP.net.Models.Marca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnioFundacion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PaisOrigen")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Marca");
+                });
+
             modelBuilder.Entity("relacionesMVC_ASP.net.Models.Vehiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -39,10 +65,8 @@ namespace relacionesMVC_ASP.net.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Modelo")
                         .IsRequired()
@@ -54,7 +78,25 @@ namespace relacionesMVC_ASP.net.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MarcaId");
+
                     b.ToTable("Vehiculo");
+                });
+
+            modelBuilder.Entity("relacionesMVC_ASP.net.Models.Vehiculo", b =>
+                {
+                    b.HasOne("relacionesMVC_ASP.net.Models.Marca", "Marca")
+                        .WithMany("Vehiculos")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("relacionesMVC_ASP.net.Models.Marca", b =>
+                {
+                    b.Navigation("Vehiculos");
                 });
 #pragma warning restore 612, 618
         }
