@@ -1,8 +1,119 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Sistema de Gestión de Marcas y Vehículos";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <h1 class="display-4">
+        Sistema de Gestión de Marcas y Vehículos
+    </h1>
+
+    <p class="lead">
+        Aplicación desarrollada con ASP.NET Core MVC, Entity Framework Core y SQL Server.
+    </p>
+
+    <p>
+        Implementación de una relación uno a muchos entre las entidades Marca y Vehículo.
+    </p>
+
+    <hr />
+
+    <h3>Módulos del Sistema</h3>
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4>Marcas</h4>
+
+                    <p>
+                        Gestión de marcas automotrices, incluyendo nombre,
+                        país de origen y año de fundación.
+                    </p>
+
+                    <a asp-controller="Marcas"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Ingresar
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4>Vehículos</h4>
+
+                    <p>
+                        Administración de vehículos asociados a una marca,
+                        incluyendo modelo, capacidad, color, año de fabricación y precio.
+                    </p>
+
+                    <a asp-controller="Vehiculos"
+                       asp-action="Index"
+                       class="btn btn-success">
+                        Ingresar
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+
+        <h4>Descripción del Proyecto</h4>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <p>
+                    Este proyecto permite gestionar información de marcas y vehículos,
+                    aplicando una relación uno a muchos donde una marca puede tener varios vehículos
+                    asociados.
+                </p>
+
+                <p class="mb-0">
+                    Además, incorpora validaciones mediante DataAnnotations,
+                    persistencia de datos con Entity Framework Core y almacenamiento
+                    en SQL Server.
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+
+        <h4>Integrantes del Grupo 6</h4>
+
+        <ul class="list-group">
+
+            <li class="list-group-item ">
+                Henry Borja: Desarrollo del componente autónomo, implementación de la lista desplegable para la clave foránea y elaboración de la documentación técnica.
+            </li>
+
+            <li class="list-group-item ">
+                Nathaly Cuasapaz: Creación de la entidad Marca e implementación de la relación uno a muchos con la entidad Vehículo.
+            </li>
+
+            <li class="list-group-item ">
+                Pablo Loya: Configuración inicial del proyecto, desarrollo de la Fase 1 y gestión del repositorio en GitHub.
+            </li>
+
+            <li class="list-group-item ">
+                Santiago Loya: Desarrollo de la entidad Vehículo, aplicación de validaciones con Data Annotations y verificación del funcionamiento del CRUD.
+            </li>
+
+        </ul>
+
+    </div>
+
 </div>

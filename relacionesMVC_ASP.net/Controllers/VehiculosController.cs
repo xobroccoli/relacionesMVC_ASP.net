@@ -1,7 +1,7 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using relacionesMVC_ASP.net.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class VehiculosController : Controller
 {
@@ -13,9 +13,10 @@ public class VehiculosController : Controller
     }
 
     // GET: VEHICULOS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Vehiculo.ToListAsync());
+        var vehiculoDbContext = _context.Vehiculo.Include(v => v.Marca);
+        return View(await vehiculoDbContext.ToListAsync());
     }
 
     // GET: VEHICULOS/Details/5
@@ -27,7 +28,9 @@ public class VehiculosController : Controller
         }
 
         var vehiculo = await _context.Vehiculo
+            .Include(v => v.Marca)
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (vehiculo == null)
         {
             return NotFound();
@@ -39,6 +42,7 @@ public class VehiculosController : Controller
     // GET: VEHICULOS/Create
     public IActionResult Create()
     {
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre");
         return View();
     }
 
@@ -47,7 +51,7 @@ public class VehiculosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Capacidad,Color,AnioFabricacion,Precio")] Vehiculo vehiculo)
+    public async Task<IActionResult> Create([Bind("Id,MarcaId,Modelo,Capacidad,Color,AnioFabricacion,Precio")] Vehiculo vehiculo)
     {
         if (ModelState.IsValid)
         {
@@ -55,6 +59,8 @@ public class VehiculosController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
@@ -71,6 +77,7 @@ public class VehiculosController : Controller
         {
             return NotFound();
         }
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
@@ -79,7 +86,7 @@ public class VehiculosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Marca,Modelo,Capacidad,Color,AnioFabricacion,Precio")] Vehiculo vehiculo)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MarcaId,Modelo,Capacidad,Color,AnioFabricacion,Precio")] Vehiculo vehiculo)
     {
         if (id != vehiculo.Id)
         {
@@ -104,8 +111,11 @@ public class VehiculosController : Controller
                     throw;
                 }
             }
+
             return RedirectToAction(nameof(Index));
         }
+
+        ViewData["MarcaId"] = new SelectList(_context.Marca, "Id", "Nombre", vehiculo.MarcaId);
         return View(vehiculo);
     }
 
@@ -118,7 +128,9 @@ public class VehiculosController : Controller
         }
 
         var vehiculo = await _context.Vehiculo
+            .Include(v => v.Marca)
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (vehiculo == null)
         {
             return NotFound();
@@ -133,6 +145,7 @@ public class VehiculosController : Controller
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var vehiculo = await _context.Vehiculo.FindAsync(id);
+
         if (vehiculo != null)
         {
             _context.Vehiculo.Remove(vehiculo);
